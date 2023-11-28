@@ -12,11 +12,19 @@ const projectRoutes = require("./src/routes/project.routes");
 const educationRoutes = require("./src/routes/education.routes");
 const experienceRoutes = require("./src/routes/experience.routes");
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-};
+if (process.env.NODE_ENV === "development") {
+  const corsOptions = {
+    origin: "http://localhost:3000",
+  };
+  app.use(cors(corsOptions));
+} else {
+  const corsOptions = {
+    origin: "https://portfolio-api-backend-pearl.vercel.app",
+    allowedHeaders: "Content-type, Authorization",
+  };
+  app.use(cors(corsOptions));
+}
 
-app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
