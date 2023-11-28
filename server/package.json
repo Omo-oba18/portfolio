@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently \"yarn run server\" \"yarn run app\"",
     "server": "nodemon index.js",
-    "app": "cd app && yarn start",
+    "app": "cd .. && cd app && yarn start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Chablis Mahutin Dossou-gouin",
