@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(cors(corsOptions));
 } else {
   const corsOptions = {
-    origin: "https://portfolio-api-backend-pearl.vercel.app",
+    origin: "https://portfolio-chablis.vercel.app",
     allowedHeaders: "Content-type, Authorization",
   };
   app.use(cors(corsOptions));
