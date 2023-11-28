@@ -47,9 +47,9 @@ Class of 2017, attended to OOP, JAVA, Algorithm, Physics, Pascal Language.
 
 ## Contact
 
-- **Email:** omoobaoshoffa@gmail.com
+- **Email:** [Chablis email](omoobaoshoffa@gmail.com)
 - **LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/chablis-mahutin)
-- **Portfolio:** [Your Portfolio Website](https://www.your-portfolio-website.com)
+- **Portfolio:** [Your Portfolio Website](https://www.portfolio-chablis.vercel.app)
 
 Feel free to reach out for collaboration, job opportunities, or just to connect!
 
