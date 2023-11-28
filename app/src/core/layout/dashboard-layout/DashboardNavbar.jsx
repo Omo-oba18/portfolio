@@ -1,10 +1,16 @@
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Link as RouterLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import {
   AppBar,
   Box,
   Button,
   Container,
   Toolbar,
+  Avatar,
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,7 +86,14 @@ export function DashboardNavbar() {
           </Button>
           {/* Section divider */}
           <Box sx={{ flexGrow: 1 }} />
-
+          <Button
+            component={RouterLink}
+            to={PATH_DASHBOARD.profile}
+            sx={{ p: 0 }}
+            className={classes.profile}
+          >
+            <Avatar alt="Chablis Mahutin" src="/static/images/avatar/2.jpg" />
+          </Button>
           <Button
             className={classes.link}
             variant="outlined"
@@ -158,5 +171,8 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create("opacity", {
       duration: theme.transitions.duration.shortest,
     }),
+  },
+  profile: {
+    marginRight: "1em",
   },
 }));

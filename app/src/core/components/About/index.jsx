@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { motion } from "framer-motion";
 import profil from "../../../assets/profil.png";
+import { getUserState } from "../../../slices/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserInfo } from "../../../slices/user/thunk/get-user";
+import { LoadingPage } from "../../../pages/LoadingPage";
 
 export const About = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const userName = "Chablis";
+  const { user, isLoading } = useSelector(getUserState);
+
+  useEffect(() => {
+    dispatch(getUserInfo(userName));
+  }, [dispatch]);
+
+  if (isLoading) return <LoadingPage />;
   return (
     <Box className={classes.container}>
       <Stack
@@ -22,11 +35,7 @@ export const About = () => {
           <Typography variant="h2" className={classes.title}>
             About Chablis Mahutin
           </Typography>
-          <Typography>
-            I am a versatile software engineer with expertise in building
-            mobile, desktop, and web applications. My passion lies in creating
-            innovative and user-friendly solutions.
-          </Typography>
+          {user && <Typography>{user.aboutMe}</Typography>}
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 100 }} // Initial state

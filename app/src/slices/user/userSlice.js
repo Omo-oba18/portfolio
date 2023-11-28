@@ -1,5 +1,6 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { getUserInfoBuilder } from "./thunk/get-user";
+import { updateUserInfoBuilder } from "./thunk/edit-user";
 
 const initialState = {
   user: null,
@@ -26,6 +27,7 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     getUserInfoBuilder(builder);
+    updateUserInfoBuilder(builder);
   },
 });
 

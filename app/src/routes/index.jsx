@@ -27,6 +27,7 @@ const RegisterPage = Loadable(lazy(() => import("../pages/RegisterPage")));
 const UnknownPage = Loadable(lazy(() => import("../pages/UnknownPage")));
 const LandingPage = Loadable(lazy(() => import("../pages/LandingPage")));
 const DashboardPage = Loadable(lazy(() => import("../pages/DashboardPage")));
+const ProfilePage = Loadable(lazy(() => import("../pages/ProfilePage")));
 const SkillPage = Loadable(
   lazy(() => import("../pages/components/dashboard/skill/SkillPage"))
 );
@@ -100,6 +101,7 @@ function Router() {
       ),
       children: [
         { path: PATH_DASHBOARD.root, element: <DashboardPage /> },
+        { path: PATH_DASHBOARD.profile, element: <ProfilePage /> },
         { path: PATH_DASHBOARD.skill, element: <SkillPage /> },
         // { path: PATH_DASHBOARD.education, element: <EducationPage /> },
         { path: PATH_DASHBOARD.newSkill, element: <NewSkillPage /> },

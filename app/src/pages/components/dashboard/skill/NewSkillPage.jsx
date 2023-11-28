@@ -94,13 +94,6 @@ const NewSkillPage = () => {
                     error={Boolean(touched.name && errors.name)}
                     helperText={touched.name && errors.name}
                   />
-
-                  <Alert className={classes.infoBar} severity="info">
-                    <strong>
-                      The Skill Key becomes the prefix for tasks created within
-                      that Skill
-                    </strong>
-                  </Alert>
                   <TextField
                     fullWidth
                     type="text"

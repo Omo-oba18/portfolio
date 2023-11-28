@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
     minLength: 8,
   },
   bio: { type: String },
+  aboutMe: { type: String },
   socialLinks: {
     website: { type: String },
     linkedin: { type: String },
