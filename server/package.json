@@ -4,9 +4,9 @@
   "description": "portfolio backend api",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"yarn run server\" \"yarn run client\"",
+    "start": "concurrently \"yarn run server\" \"yarn run app\"",
     "server": "nodemon index.js",
-    "client": "cd .. && cd client && yarn start",
+    "app": "cd app && yarn start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Chablis Mahutin Dossou-gouin",
