@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
     linkedin: { type: String },
     github: { type: String },
   },
-  profilPicture: { type: String },
+  profilePicture: { type: String, default: null },
   skills: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Skill", required: true },
   ],

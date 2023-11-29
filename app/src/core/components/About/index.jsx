@@ -35,7 +35,11 @@ export const About = () => {
           <Typography variant="h2" className={classes.title}>
             About Chablis Mahutin
           </Typography>
-          {user && <Typography>{user.aboutMe}</Typography>}
+          {user && (
+            <Typography sx={{ textAlign: "justify" }}>
+              {user.aboutMe}
+            </Typography>
+          )}
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 100 }} // Initial state
@@ -43,7 +47,7 @@ export const About = () => {
           transition={{ duration: 1 }}
           className={classes.roundedBox}
         >
-          <img src={profil} className={classes.image} />
+          {user && <img src={user.profilePicture} className={classes.image} />}
         </motion.div>
       </Stack>
     </Box>

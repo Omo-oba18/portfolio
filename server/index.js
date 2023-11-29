@@ -25,10 +25,11 @@ if (process.env.NODE_ENV === "development") {
   app.use(cors(corsOptions));
 }
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "5mb" }));
 app.use(
   bodyParser.urlencoded({
     extended: true,
+    limit: "5mb",
   })
 );
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -6,13 +6,14 @@ import {
   TextField,
   Button,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../core/components";
 import profileImage from "../assets/profile-image.jpg";
 import { makeStyles } from "@mui/styles";
 import { alpha } from "@mui/material/styles";
-import { ModeEditOutline } from "@mui/icons-material";
+import { CameraAltOutlined, ModeEditOutline } from "@mui/icons-material";
 import { getUserState } from "../slices/user/userSlice";
 import { LoadingPage } from "./LoadingPage";
 import { getUserInfo } from "../slices/user/thunk/get-user";
@@ -30,6 +31,7 @@ const ProfilePage = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editAboutMe, setEditAboutMe] = useState(false);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
   const classes = useStyles();
 
   const handleEdit = () => {
@@ -42,6 +44,7 @@ const ProfilePage = () => {
       });
     }
   };
+
   const handleEditAbout = () => {
     setEditAboutMe(!editAboutMe);
     if (!editAboutMe && user) {
@@ -50,12 +53,35 @@ const ProfilePage = () => {
       });
     }
   };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setIsLoadingImage(true);
+      const reader = new FileReader();
+      reader.onload = () => {
+        formik.setFieldValue("profilePicture", reader.result);
+        dispatch(updateUserInfo({ profilePicture: reader.result }))
+          .unwrap()
+          .then(() => {
+            dispatch(getUserInfo(userName));
+            setIsLoadingImage(false);
+          })
+          .catch((error) => {
+            setIsLoadingImage(false);
+          });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       name: "",
       phone: "",
       bio: "",
       aboutMe: "",
+      profilePicture: null,
     },
     onSubmit: (values, { resetForm, setErrors, setSubmitting }) => {
       dispatch(updateUserInfo(values))
@@ -129,7 +155,32 @@ const ProfilePage = () => {
                 </Button>
               )}
             </Stack>
-            <Box component="img" src={profileImage} className={classes.image} />
+            {user && (
+              <Box className={classes.imageWrapper}>
+                {isLoadingImage ? (
+                  <CircularProgress />
+                ) : (
+                  <>
+                    <img
+                      className={classes.image}
+                      alt={user.name}
+                      src={formik.values.profilePicture || profileImage}
+                    />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="profilePicture"
+                      className={classes.hiddenInput}
+                      onChange={handleFileChange}
+                    />
+                    <label htmlFor="profilePicture">
+                      <CameraAltOutlined className={classes.cameraIcon} />
+                    </label>
+                  </>
+                )}
+              </Box>
+            )}
+            {/* {user && <Box component="img" src={profileImage} alt={user.name} />} */}
             <Stack direction="column" className={classes.boxContent}>
               <Typography>Detail</Typography>
               <Typography>Name:</Typography>
@@ -231,10 +282,26 @@ const useStyles = makeStyles((theme) => ({
     margin: "2em auto",
     textAlign: "center",
   },
-  image: {
+  imageWrapper: {
     width: "200px",
     height: "200px",
-    borderRadius: "100%",
+    borderRadius: "50%",
+    position: "relative",
+    overflow: "hidden",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    borderRadius: "50%",
+  },
+  hiddenInput: { display: "none" },
+  cameraIcon: {
+    position: "absolute",
+    top: "1.2rem",
+    right: "2rem",
+    zIndex: 99,
+    cursor: "pointer",
   },
   boxContent: {
     width: "30%",

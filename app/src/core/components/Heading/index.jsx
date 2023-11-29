@@ -73,7 +73,7 @@ export const Heading = () => {
           transition={{ duration: 1 }}
         >
           {user ? (
-            <Typography>{user.bio}</Typography>
+            <Typography sx={{ textAlign: "justify" }}>{user.bio}</Typography>
           ) : (
             <Typography>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
