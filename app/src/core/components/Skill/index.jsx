@@ -7,6 +7,7 @@ import { ReactComponent as ReactIcon } from "../../../assets/icons/react-js.svg"
 import { getSkillState } from "../../../slices/skill/skillSlice";
 import { fetchSkills } from "../../../slices/skill/thunk/fetchSkill";
 import { LoadingPage } from "../../../pages/LoadingPage";
+import { StarOutlineOutlined } from "@mui/icons-material";
 
 export const Skill = () => {
   const { isLoading, skills } = useSelector(getSkillState);
@@ -42,10 +43,9 @@ export const Skill = () => {
                   <Typography className={classes.skillTitle} variant="h5">
                     {skill.name}
                   </Typography>
-                  <Typography>{skill.proficiency}</Typography>
-                  {/* <Typography sx={{ textAlign: "justify" }}>
-                    {skill.description}
-                  </Typography> */}
+                  <Stack direction="row">
+                    {getStarsForProficiency(skill.proficiency)}
+                  </Stack>
                 </Stack>
               </Grid>
             ))}
@@ -88,3 +88,52 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
   },
 }));
+
+const getStarsForProficiency = (proficiency) => {
+  const starCount = 5;
+  const fullStar = (
+    <StarOutlineOutlined key="full" style={{ color: "#4F6F52" }} />
+  );
+  const halfStar = (
+    <StarOutlineOutlined
+      key="half"
+      style={{
+        color: "#4F6F52",
+        clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
+      }}
+    />
+  );
+  const emptyStar = (
+    <StarOutlineOutlined key="empty" style={{ color: "#000" }} />
+  );
+
+  const proficiencyLower = proficiency.toLowerCase();
+  let filledStars = 0;
+  let halfFilled = false;
+
+  if (proficiencyLower === "beginner") {
+    filledStars = 2;
+  } else if (proficiencyLower === "intermediate") {
+    filledStars = 3.5;
+    halfFilled = true;
+  } else if (proficiencyLower === "advanced") {
+    filledStars = 4.5;
+    halfFilled = true;
+  }
+
+  const starIcons = [];
+
+  for (let i = 0; i < starCount; i++) {
+    if (filledStars >= 1) {
+      starIcons.push(fullStar);
+      filledStars -= 1;
+    } else if (halfFilled) {
+      starIcons.push(halfStar);
+      halfFilled = false;
+    } else {
+      starIcons.push(emptyStar);
+    }
+  }
+
+  return starIcons;
+};
