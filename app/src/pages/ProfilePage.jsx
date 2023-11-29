@@ -18,12 +18,9 @@ import { LoadingPage } from "./LoadingPage";
 import { getUserInfo } from "../slices/user/thunk/get-user";
 import { Form, FormikProvider, useFormik } from "formik";
 import { updateUserInfo } from "../slices/user/thunk/edit-user";
-import { PATH_DASHBOARD } from "../routes/paths";
-import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const userName = "Chablis";
   const { user, isLoading } = useSelector(getUserState);
 

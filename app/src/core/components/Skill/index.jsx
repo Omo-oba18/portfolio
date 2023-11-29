@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: "300px",
     padding: "2em",
     margin: "0 auto",
-    justifyContent: "center",
+    justifyContent: "start",
     alignItems: "center",
   },
   icon: {

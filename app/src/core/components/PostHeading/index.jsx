@@ -64,6 +64,12 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
+      paddingTop: "2em",
+      paddingBottom: "2em",
+      paddingRight: "auto",
+      paddingLeft: "auto",
+      flexWrap: "nowrap",
+      height: "unset",
     },
   },
   topLeft: {
@@ -75,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
       width: "300px", // Adjust the individual photo width as needed
       height: "250px",
     },
-    width: "200px",
+    width: "90%",
     height: "200px",
   },
   topRight: {
@@ -90,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
       width: "250px", // Adjust the individual photo width as needed
       height: "250px",
     },
-    width: "200px",
+    width: "90%",
     height: "200px",
   },
   middle: {
@@ -103,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
       width: "360px",
       maxHeight: "140px",
     },
-    width: "200px",
+    width: "90%",
     height: "200px",
   },
   bottomRight: {
@@ -116,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
       width: "290px",
       height: "290px",
     },
-    width: "200px",
+    width: "90%",
     height: "200px",
   },
   centerRight: {
@@ -129,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
       width: "290px",
       height: "390px",
     },
-    width: "200px",
+    width: "90%",
     height: "200px",
   },
   image: {
@@ -139,6 +145,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "8px",
     [theme.breakpoints.down("sm")]: {
       flex: "0 0 100%",
+      margin: "0",
     },
   },
 }));

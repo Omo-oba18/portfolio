@@ -7,6 +7,26 @@ import { Logo } from "../Logo";
 import { getUserInfo } from "../../../slices/user/thunk/get-user";
 import { LoadingPage } from "../../../pages/LoadingPage";
 import { getUserState } from "../../../slices/user/userSlice";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.secondary.main,
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "80vh",
+    maxWidth: "600px",
+    padding: "0 2em",
+    margin: "0 auto",
+  },
+  btn: {
+    backgroundColor: `${theme.palette.primary.main} !important`,
+    color: "black !important",
+    padding: "8px 30px !important",
+  },
+}));
+
 export const Heading = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -67,27 +87,9 @@ export const Heading = () => {
           transition={{ duration: 1 }}
           whileHover={{ scale: 1.2 }}
         >
-          <Button className={classes.defaultColor}>Hire me</Button>
+          <Button className={classes.btn}>Hire me</Button>
         </motion.div>
       </Stack>
     </Box>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.secondary.main,
-  },
-  center: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: "80vh",
-    maxWidth: "600px",
-    padding: "0 2em",
-    margin: "0 auto",
-  },
-  defaultColor: {
-    color: theme.palette.primary.main,
-  },
-  btn: {},
-}));
