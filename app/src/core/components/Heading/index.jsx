@@ -55,14 +55,18 @@ export const Heading = () => {
           transition={{ duration: 1 }}
         >
           {user && (
-            <Typography variant="h1">
+            <Typography
+              variant="h1"
+              fontFamily="Radley serif"
+              fontStyle="italic"
+            >
               Hello, I am <br />
               <Typography
                 className={classes.defaultColor}
                 variant="h2"
                 component="span"
               >
-                {user.name}
+                {user.name}!
               </Typography>
             </Typography>
           )}

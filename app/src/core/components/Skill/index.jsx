@@ -17,6 +17,7 @@ export const Skill = () => {
     dispatch(fetchSkills());
   }, [dispatch]);
   if (isLoading) return <LoadingPage />;
+
   return (
     <Box className={classes.root}>
       <motion.div
@@ -43,6 +44,10 @@ export const Skill = () => {
                   <Typography className={classes.skillTitle} variant="h5">
                     {skill.name}
                   </Typography>
+                  <Typography className={classes.skillDescription} variant="p">
+                    {/* {getRandomSentence(skill.description)} */}
+                  </Typography>
+
                   <Stack direction="row">
                     {getStarsForProficiency(skill.proficiency)}
                   </Stack>
@@ -136,4 +141,16 @@ const getStarsForProficiency = (proficiency) => {
   }
 
   return starIcons;
+};
+
+// Function to get a random sentence from the description
+const getRandomSentence = (description) => {
+  // Split the description into an array of sentences
+  const sentences = description.split(". ");
+
+  // Get a random index within the range of the sentences array length
+  const randomIndex = Math.floor(Math.random() * sentences.length);
+
+  // Return the randomly selected sentence
+  return sentences[randomIndex];
 };

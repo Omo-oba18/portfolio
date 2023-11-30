@@ -8,7 +8,7 @@ async function getUserInfo(req, res) {
     const user = await User.findOne({
       name: { $regex: new RegExp(userName, "i") },
     })
-      .select("-password -email -_id -__v")
+      .select("-password -_id -__v")
       .populate("educations")
       .populate("skills")
       .populate("experiences")

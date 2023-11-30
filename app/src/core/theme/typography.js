@@ -16,8 +16,7 @@ function responsiveFontSizes({ sm, md, lg }) {
   };
 }
 
-const FONT_PRIMARY =
-  "Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif";
+const FONT_PRIMARY = "Radley serif, Carlito sans-serif";
 
 export const typography = {
   fontFamily: FONT_PRIMARY,
