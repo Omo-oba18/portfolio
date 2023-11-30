@@ -29,7 +29,11 @@ export function MainFooter() {
   return (
     <Box className={classes.footer}>
       <div className={classes.container}>
-        <motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: -100 }} // Initial state
+          animate={{ opacity: 1, x: 0 }} // Animation state
+          transition={{ duration: 1 }}
+        >
           <Stack
             direction="column"
             className={classes.leftSideFooter}
@@ -52,7 +56,11 @@ export function MainFooter() {
             </Stack>
           </Stack>
         </motion.div>
-        <motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 100 }} // Initial state
+          animate={{ opacity: 1, x: 0 }} // Animation state
+          transition={{ duration: 1 }}
+        >
           <Stack className={classes.rightSideFooter} spacing={2}>
             <Stack direction="row" spacing={2} className={classes.itemWrapper}>
               <Box className={classes.iconWrapper}>
@@ -82,14 +90,19 @@ export function MainFooter() {
             </Stack>
           </Stack>
         </motion.div>
-
-        <Typography
-          variant="caption"
-          component={Box}
-          className={classes.copyright}
+        <motion.div
+          initial={{ opacity: 0, y: 100 }} // Initial state
+          animate={{ opacity: 1, y: 0 }} // Animation state
+          transition={{ duration: 1 }}
         >
-          Copyright © omoobaoshoffa
-        </Typography>
+          <Typography
+            variant="caption"
+            component={Box}
+            className={classes.copyright}
+          >
+            Copyright © omoobaoshoffa
+          </Typography>
+        </motion.div>
       </div>
     </Box>
   );
@@ -156,6 +169,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     minWidth: "300px",
     justifyContent: "start",
+    margin: "0 4em",
   },
   textValue: {
     fontStyle: "italic",
