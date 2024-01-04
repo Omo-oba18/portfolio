@@ -2,19 +2,36 @@ import { Avatar, Box, Card, Tooltip, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import moment from "moment";
 import skillCover from "../../../../assets/icons/react-js.svg";
+import { Link } from "react-router-dom";
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 
 export function SkillCard({ skill }) {
   const classes = useStyles();
 
   return (
-    <Card key={skill.id} className={classes.root}>
+    <Card
+      key={skill.id}
+      className={classes.root}
+      component={Link}
+      to={PATH_DASHBOARD.skillDetail(skill._id)}
+    >
       <Box className={classes.imageContainer}>
         <Box className={classes.imageWrapper}>
-          <Box
-            className={classes.skillImage}
-            component="img"
-            src={skillCover}
-          />
+          {skill.image != null ? (
+            <Box
+              className={classes.skillImage}
+              component="img"
+              src={skill.image}
+              alt={skill.name}
+            />
+          ) : (
+            <Box
+              className={classes.skillImage}
+              component="img"
+              src={skillCover}
+              alt={skill.name}
+            />
+          )}
         </Box>
       </Box>
       <Box className={classes.skillWrapper}>

@@ -1,8 +1,14 @@
-const project = require("../services/project.service");
+const projectService = require("../services/project.service");
 
 async function createProject(req, res) {
   try {
-    return await project.saveProject(req, res);
+    const projectData = req.body;
+    const savedProject = await projectService.createProject(
+      req.userId,
+      req,
+      projectData
+    );
+    res.status(201).json(savedProject);
   } catch (error) {
     res
       .status(500)
@@ -12,17 +18,43 @@ async function createProject(req, res) {
 
 async function getProjects(req, res) {
   try {
-    return await project.getAllProjects(req, res);
+    const allProjects = await projectService.getAllProjects();
+    return res.status(200).json({ message: "Projects: ", data: allProjects });
   } catch (error) {
-    res.status(500).json({
-      message: "Error while retrieving projects",
-      error: error.message,
-    });
+    res
+      .status(500)
+      .json({
+        message: "Error while retrieving projects",
+        error: error.message,
+      });
   }
 }
+async function getProject(req, res) {
+  try {
+    const { id } = req.params;
+    const project = await projectService.getProjectById(id);
+    return res.status(200).json({ message: "Projects: ", data: project });
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Error while retrieving project",
+        error: error.message,
+      });
+  }
+}
+
 async function updateProject(req, res) {
   try {
-    return await project.modifyProject(req, res);
+    const { id } = req.params;
+    const updatedData = req.body;
+    const updatedProject = await projectService.updateProject(
+      req.userId,
+      id,
+      updatedData,
+      req
+    );
+    res.json(updatedProject);
   } catch (error) {
     res
       .status(500)
@@ -32,7 +64,9 @@ async function updateProject(req, res) {
 
 async function deleteProject(req, res) {
   try {
-    return await project.removeProject(req, res);
+    const { id } = req.params;
+    const deletedProject = await projectService.deleteProject(id);
+    res.json(deletedProject);
   } catch (error) {
     res
       .status(500)
@@ -45,4 +79,5 @@ module.exports = {
   updateProject,
   deleteProject,
   getProjects,
+  getProject,
 };

@@ -44,7 +44,6 @@ async function updateUserInfo(req, res) {
         const fileBuffer = req.file.buffer;
         const base64Image = fileBuffer.toString("base64");
         userDataToUpdate.profilePicture = base64Image;
-        console.log(userDataToUpdate.profilePicture);
       }
 
       const updatedUser = await User.findByIdAndUpdate(

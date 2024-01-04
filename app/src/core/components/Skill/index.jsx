@@ -40,7 +40,15 @@ export const Skill = () => {
             {skills.data.map((skill) => (
               <Grid key={skill._id} item xs={12} sm={4} md={3}>
                 <Stack className={classes.item} direction="column">
-                  <ReactIcon className={classes.icon} />
+                  {skill.image ? (
+                    <img
+                      src={skill.image}
+                      alt={skill.name}
+                      className={classes.icon}
+                    />
+                  ) : (
+                    <ReactIcon className={classes.icon} />
+                  )}
                   <Typography className={classes.skillTitle} variant="h5">
                     {skill.name}
                   </Typography>
@@ -63,7 +71,11 @@ export const Skill = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: { padding: "2em", backgroundColor: theme.palette.secondary.main },
-  title: { textAlign: "center", padding: "2rem 0" },
+  title: {
+    textAlign: "center",
+    padding: "2rem 0",
+    color: theme.palette.primary.main,
+  },
   item: {
     width: "330px",
     height: "170px",
@@ -87,6 +99,7 @@ const useStyles = makeStyles((theme) => ({
     height: "60px",
     position: "absolute",
     right: 0,
+    marginRight: "1em",
   },
   divider: {
     color: theme.palette.primary.main,

@@ -9,6 +9,7 @@ router.post("/", checkLoggedUserType, skill.createSkill);
 router.get("/", skill.getSkills);
 
 router.put("/:id", checkLoggedUserType, skill.updateSkill);
+router.get("/:id", checkLoggedUserType, skill.getSkill);
 
 router.delete("/:id", checkLoggedUserType, skill.deleteSkill);
 

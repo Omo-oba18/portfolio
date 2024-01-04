@@ -3,10 +3,13 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { createSkillBuilder } from "./thunk/create-skill";
 import { fetchSkillsBuilder } from "./thunk/fetchSkill";
+import { editSkillBuilder } from "./thunk/edit-skill";
+import { getSkillByIdBuilder } from "./thunk/getSkillById";
 
 // Define an initial state for the skill slice
 const initialState = {
   skills: [],
+  skill: null,
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -36,13 +39,15 @@ const skillSlice = createSlice({
   extraReducers: (builder) => {
     createSkillBuilder(builder);
     fetchSkillsBuilder(builder);
+    editSkillBuilder(builder);
+    getSkillByIdBuilder(builder);
   },
 });
 
 // Export the reducer
 export default skillSlice.reducer;
 // Actions
-export const { addSkill, removeSkill } = skillSlice.actions;
+export const { addSkill, removeSkill, resetState } = skillSlice.actions;
 
 // Selectors
 const getState = (state) => state;

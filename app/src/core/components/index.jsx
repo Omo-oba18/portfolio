@@ -4,5 +4,7 @@ export { Page } from "./Page";
 export { Heading } from "./Heading";
 export { PostHeading } from "./PostHeading";
 export { Skill } from "./Skill";
+export { Education } from "./Education";
 export { About } from "./About";
 export { Pagination } from "./Pagination/index";
+export { Experience } from "./Experience";

@@ -1,4 +1,11 @@
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Stack,
+  Typography,
+  TextField,
+  Button,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
@@ -9,8 +16,10 @@ import {
   PhoneOutlined,
   Twitter,
 } from "@mui/icons-material";
+import emailjs from "@emailjs/browser";
+
 import { getUserInfo } from "../../../slices/user/thunk/get-user";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { LoadingPage } from "../../../pages/LoadingPage";
 import { getUserState } from "../../../slices/user/userSlice";
 
@@ -19,12 +28,40 @@ export function MainFooter() {
   const dispatch = useDispatch();
   const userName = "Chablis";
   const { user, isLoading } = useSelector(getUserState);
+  const form = useRef();
 
   useEffect(() => {
     dispatch(getUserInfo(userName));
   }, [dispatch]);
 
   if (isLoading) return <LoadingPage />;
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        form.current,
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        (result) => {
+          alert("message sent successfully...");
+          resetForm();
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
+  const resetForm = () => {
+    if (form && form.current) {
+      form.current.reset();
+    }
+  };
 
   return (
     <Box className={classes.footer}>
@@ -33,6 +70,7 @@ export function MainFooter() {
           initial={{ opacity: 0, x: -100 }} // Initial state
           animate={{ opacity: 1, x: 0 }} // Animation state
           transition={{ duration: 1 }}
+          className={classes.footerWrapper}
         >
           <Stack
             direction="column"
@@ -55,8 +93,73 @@ export function MainFooter() {
               </Typography>
             </Stack>
           </Stack>
+          <form autoComplete="off" noValidate ref={form} onSubmit={sendEmail}>
+            <Stack spacing={2} className={classes.formWrapper}>
+              <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+                <TextField
+                  sx={{ width: "48%" }}
+                  autoComplete="firstname"
+                  type="text"
+                  placeholder="Firstname"
+                  className={classes.input}
+                  size="small"
+                  name="firstname"
+                />
+
+                <TextField
+                  sx={{ width: "48%" }}
+                  autoComplete="lastname"
+                  type="text"
+                  placeholder="Lastname"
+                  className={classes.input}
+                  size="small"
+                  name="lastname"
+                />
+              </Stack>
+
+              <TextField
+                fullWidth
+                autoComplete="email"
+                type="email"
+                placeholder="Email address"
+                className={classes.input}
+                size="small"
+                name="user_email"
+              />
+
+              <TextField
+                fullWidth
+                autoComplete="subject"
+                type="text"
+                placeholder="Subject"
+                className={classes.input}
+                size="small"
+                name="subject"
+              />
+
+              <TextField
+                fullWidth
+                autoComplete="message"
+                type="text"
+                placeholder="Your message"
+                className={classes.input}
+                rows={3}
+                multiline
+                size="small"
+                name="message"
+              />
+              <Button
+                size="large"
+                type="submit"
+                variant="contained"
+                sx={{ margin: "0.6em 0 !important", backgroundColor: "#000" }}
+              >
+                Submit
+              </Button>
+            </Stack>
+          </form>
         </motion.div>
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, x: 100 }} // Initial state
           animate={{ opacity: 1, x: 0 }} // Animation state
           transition={{ duration: 1 }}
@@ -89,7 +192,7 @@ export function MainFooter() {
               </Box>
             </Stack>
           </Stack>
-        </motion.div>
+        </motion.div> */}
         <motion.div
           initial={{ opacity: 0, y: 100 }} // Initial state
           animate={{ opacity: 1, y: 0 }} // Animation state
@@ -121,7 +224,7 @@ const useStyles = makeStyles((theme) => ({
   },
   leftSideFooter: {
     display: "flex",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "start",
     maxWidth: "500px",
     padding: "2rem 0",
@@ -174,5 +277,23 @@ const useStyles = makeStyles((theme) => ({
   textValue: {
     fontStyle: "italic",
     margin: "0 0.4rem",
+  },
+  input: {
+    "& .MuiInputBase-root": {
+      background: theme.palette.secondary.main,
+    },
+    "& .MuiFormControl-root": {
+      background: theme.palette.secondary.main,
+      margin: "0.5em 0",
+    },
+  },
+  footerWrapper: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    flexDirection:"row",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+    },
   },
 }));

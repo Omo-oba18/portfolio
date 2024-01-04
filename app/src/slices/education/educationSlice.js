@@ -3,6 +3,8 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { createEducationBuilder } from "./thunk/create-education";
 import { fetchEducationsBuilder } from "./thunk/fetch-education";
+import { editEducationBuilder } from "./thunk/edit-education";
+import { getEducationByIdBuilder } from "./thunk/getEducationById";
 
 // Define an initial state for the education slice
 const initialState = {
@@ -36,6 +38,8 @@ const educationSlice = createSlice({
   extraReducers: (builder) => {
     createEducationBuilder(builder);
     fetchEducationsBuilder(builder);
+    editEducationBuilder(builder);
+    getEducationByIdBuilder(builder);
   },
 });
 
@@ -47,4 +51,7 @@ export const { resetState } = educationSlice.actions;
 // Selectors
 const getState = (state) => state;
 
-export const getEducationState = createSelector([getState], (state) => state.education);
+export const getEducationState = createSelector(
+  [getState],
+  (state) => state.education
+);

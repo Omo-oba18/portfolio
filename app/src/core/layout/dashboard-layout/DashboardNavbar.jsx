@@ -79,10 +79,18 @@ export function DashboardNavbar() {
           <Button
             className={classes.link}
             component={RouterLink}
-            to={PATH_DASHBOARD.skill}
+            to={PATH_DASHBOARD.education}
             variant="text"
           >
             Education
+          </Button>
+          <Button
+            className={classes.link}
+            component={RouterLink}
+            to={PATH_DASHBOARD.project}
+            variant="text"
+          >
+            Project
           </Button>
           {/* Section divider */}
           <Box sx={{ flexGrow: 1 }} />

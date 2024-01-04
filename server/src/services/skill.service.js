@@ -1,94 +1,80 @@
-const Skill = require("../models/skills.model");
+const BaseService = require("./base.service");
+const Skill = require("../models/skills.model"); // Replace 'Skill' with your actual Skill model
 
-async function saveSkill(req, res) {
-  const { name, proficiency, description, userId } = req.body;
-  try {
-    const existingSkill = await Skill.findOne({ name });
+class SkillService extends BaseService {
+  constructor() {
+    super(Skill, "image"); // 'image' should be replaced with your actual image field name in the Skill model
+  }
 
-    if (existingSkill) {
-      return res.status(400).json({ message: "Skill already exists" });
+  async createSkill(userId, req, skillData) {
+    try {
+      if (req.file) {
+        const savedSkill = await this.saveWithImage(userId, req, skillData);
+        return savedSkill;
+      } else {
+        const savedSkill = await this.saveWithoutImage(userId, skillData);
+        return savedSkill;
+      }
+    } catch (error) {
+      throw error;
     }
-
-    const newSkill = new Skill({
-      name,
-      proficiency,
-      description,
-      userId,
-    });
-    await newSkill.save();
-    res.status(201).json({ message: "Skill saved successfully" });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Skill creation failed", error: error.message });
   }
-}
 
-async function getAllSkills(req, res) {
-  const page = req.query.page || 1;
-  const limit = 10;
-  try {
-    const skills = await Skill.find()
-      .skip((page - 1) * limit)
-      .limit(limit);
-    res.status(200).json({ message: "Skills available: ", data: skills });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-async function modifySkill(req, res) {
-  try {
-    // Using the getSkill middleware to retrieve the skill
-    await getSkill(req, res, async () => {
-      if (req.body.name != null) {
-        res.skill.name = req.body.name;
+  async updateSkill(userId, skillId, updatedData, req) {
+    try {
+      if (req.file) {
+        const updatedSkill = await this.updateWithImage(
+          userId,
+          skillId,
+          req,
+          updatedData
+        );
+        return updatedSkill;
+      } else {
+        const updatedSkill = await this.updateWithoutImage(
+          userId,
+          skillId,
+          updatedData
+        );
+        return updatedSkill;
       }
-
-      if (req.body.proficiency != null) {
-        res.skill.proficiency = req.body.proficiency;
-      }
-
-      if (req.body.description != null) {
-        res.skill.description = req.body.description;
-      }
-
-      const updatedSkill = await res.skill.save();
-      res.json({ message: "Skill modified", data: updatedSkill });
-    });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-}
-
-async function removeSkill(req, res) {
-  try {
-    // Using the getSkill middleware to retrieve the skill
-    await getSkill(req, res, async () => {
-      await res.skill.remove();
-      res.json({ message: "Skill deleted" });
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-async function getSkill(req, res, next) {
-  try {
-    const skill = await Skill.findById(req.params.id);
-    if (skill == null) {
-      return res.status(404).json({ message: "Skill not found" });
+    } catch (error) {
+      throw error;
     }
-    res.skill = skill;
-    next(); // Call next without passing an error parameter
-  } catch (error) {
-    next(error); // Call next with the error parameter
+  }
+
+  async getAllSkills() {
+    try {
+      const allSkills = await this.getAll();
+      return allSkills;
+    } catch (error) {
+      throw { message: "Failed to fetch skills", error: error.message };
+    }
+  }
+
+  async getSkillById(id) {
+    try {
+      const skill = await this.getById(id);
+      if (!skill) {
+        throw { message: "Skill not found" };
+      }
+      return skill;
+    } catch (error) {
+      throw { message: "Failed to fetch skill by ID", error: error.message };
+    }
+  }
+
+  async deleteSkill(id) {
+    try {
+      const deletedSkill = await this.delete(id);
+      if (!deletedSkill) {
+        throw { message: "Skill not found" };
+      }
+      return deletedSkill;
+    } catch (error) {
+      throw { message: "Failed to delete skill", error: error.message };
+    }
   }
 }
 
-module.exports = {
-  saveSkill,
-  getAllSkills,
-  modifySkill,
-  removeSkill,
-};
+module.exports = new SkillService();

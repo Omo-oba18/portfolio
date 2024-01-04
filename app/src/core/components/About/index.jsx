@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { motion } from "framer-motion";
-import profil from "../../../assets/profil.png";
 import { getUserState } from "../../../slices/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../../slices/user/thunk/get-user";

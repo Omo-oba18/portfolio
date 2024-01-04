@@ -14,20 +14,39 @@ import { useNavigate } from "react-router-dom";
 import { createSkill } from "../../../../slices/skill/thunk/create-skill";
 import { Page } from "../../../../core/components";
 import { PATH_DASHBOARD } from "../../../../routes/paths";
-
-import { getAuthState } from "../../../../slices/auth/authSlice";
 import { SkillSchema } from "../../../../utils/validation";
+import { getSkillState, resetState } from "../../../../slices/skill/skillSlice";
+import { useEffect, useState } from "react";
+import { LoadingPage } from "../../../LoadingPage";
 
 const NewSkillPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { errorMessage } = useSelector(getAuthState);
+  const { errorMessage, isSuccess, isError, isLoading } =
+    useSelector(getSkillState);
+  const [showAlert, setShowAlert] = useState(false);
+
+  // Function to show alert for a certain duration
+  const showAlertForDuration = (durationInMillis) => {
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, durationInMillis);
+    dispatch(resetState());
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      showAlertForDuration(3000);
+    } else if (isError) {
+      showAlertForDuration(5000);
+    }
+  }, [isSuccess, isError]);
 
   const formik = useFormik({
     initialValues: {
       name: "",
-      key: "",
       proficiency: "",
       description: "",
     },
@@ -37,22 +56,18 @@ const NewSkillPage = () => {
         .unwrap()
         .then(() => {
           resetForm();
-          setSubmitting(true);
+
           navigate(`${PATH_DASHBOARD}`);
         })
         .catch((error) => {
           resetForm();
           setSubmitting(false);
           setErrors({
-            afterSubmit: errorMessage || "Failed to create skill, try again!",
+            afterSubmit: errorMessage,
           });
         });
     },
   });
-  // const handleUpdateItems = (updatedItems) => {
-  //   formik.setFieldValue("proficiency", updatedItems);
-  // };
-
   const {
     values,
     errors,
@@ -67,21 +82,27 @@ const NewSkillPage = () => {
     !values.name ||
     !values.description ||
     !values.proficiency ||
-    !values.key ||
     !dirty ||
     !!Object.keys(errors).length ||
     isSubmitting;
-
+    
+    if (isLoading) return <LoadingPage />;
   return (
     <Page className={classes.root} title="New Skill | Dashboard">
       <Container>
         <div className={classes.content}>
           <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-              {errors.afterSubmit && (
-                <Alert severity="error">{errors.afterSubmit}</Alert>
+              {isError && showAlert && (
+                <Alert severity="error" onClose={() => setShowAlert(false)}>
+                  {errorMessage}
+                </Alert>
               )}
-
+              {isSuccess && showAlert && (
+                <Alert severity="success" onClose={() => setShowAlert(false)}>
+                  Skill saved successfully
+                </Alert>
+              )}
               <Stack spacing={5}>
                 <Typography variant="h3">Skill Creator</Typography>
 
@@ -93,14 +114,6 @@ const NewSkillPage = () => {
                     {...getFieldProps("name")}
                     error={Boolean(touched.name && errors.name)}
                     helperText={touched.name && errors.name}
-                  />
-                  <TextField
-                    fullWidth
-                    type="text"
-                    label="Skill Key"
-                    {...getFieldProps("key")}
-                    error={Boolean(touched.key && errors.key)}
-                    helperText={touched.key && errors.key}
                   />
                   <TextField
                     fullWidth

@@ -1,3 +1,4 @@
+
 const express = require("express");
 const checkLoggedUserType = require("../middleware/auth.middleware");
 

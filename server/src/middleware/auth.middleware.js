@@ -9,6 +9,8 @@ const checkLoggedUserType = (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   } else {
+    const decoded = jwt.verify(token, secretKey);
+    req.userId = decoded.userId;
     next();
   }
 };

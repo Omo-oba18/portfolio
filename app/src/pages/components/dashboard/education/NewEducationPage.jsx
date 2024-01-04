@@ -18,7 +18,7 @@ import { PATH_DASHBOARD } from "../../../../routes/paths";
 import { getAuthState } from "../../../../slices/auth/authSlice";
 import { EducationSchema } from "../../../../utils/validation";
 
-export default function NewEducationPage() {
+const NewEducationPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,7 +36,6 @@ export default function NewEducationPage() {
         .unwrap()
         .then(() => {
           resetForm();
-          setSubmitting(true);
           navigate(`${PATH_DASHBOARD}`);
         })
         .catch((error) => {
@@ -44,15 +43,11 @@ export default function NewEducationPage() {
           setSubmitting(false);
           setErrors({
             afterSubmit:
-              errorMessage || "Failed to create education, try again!",
+              errorMessage?.code || "Failed to create education, try again!",
           });
         });
     },
   });
-  // const handleUpdateItems = (updatedItems) => {
-  //   formik.setFieldValue("proficiency", updatedItems);
-  // };
-
   const {
     values,
     errors,
@@ -65,8 +60,8 @@ export default function NewEducationPage() {
 
   const isSubmitDisabled =
     !values.degree ||
-    !values.institution ||
     !values.graduationYear ||
+    !values.institution ||
     !dirty ||
     !!Object.keys(errors).length ||
     isSubmitting;
@@ -88,7 +83,7 @@ export default function NewEducationPage() {
                   <TextField
                     fullWidth
                     type="text"
-                    label="Education Degree"
+                    label="Degree"
                     {...getFieldProps("degree")}
                     error={Boolean(touched.degree && errors.degree)}
                     helperText={touched.degree && errors.degree}
@@ -96,7 +91,7 @@ export default function NewEducationPage() {
                   <TextField
                     fullWidth
                     type="text"
-                    label="Education institution"
+                    label="Institution name"
                     {...getFieldProps("institution")}
                     error={Boolean(touched.institution && errors.institution)}
                     helperText={touched.institution && errors.institution}
@@ -104,7 +99,7 @@ export default function NewEducationPage() {
                   <TextField
                     fullWidth
                     type="text"
-                    label="Education graduation year"
+                    label="Graduation year"
                     {...getFieldProps("graduationYear")}
                     error={Boolean(
                       touched.graduationYear && errors.graduationYear
@@ -128,7 +123,7 @@ export default function NewEducationPage() {
       </Container>
     </Page>
   );
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -154,3 +149,5 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
   },
 }));
+
+export default NewEducationPage;

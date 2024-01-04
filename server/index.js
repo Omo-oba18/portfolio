@@ -11,10 +11,11 @@ const skillRoutes = require("./src/routes/skill.routes");
 const projectRoutes = require("./src/routes/project.routes");
 const educationRoutes = require("./src/routes/education.routes");
 const experienceRoutes = require("./src/routes/experience.routes");
+const technologyRoutes = require("./src/routes/technology.routes");
 
 if (process.env.NODE_ENV === "development") {
   const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: "http://192.168.1.104:3000",
   };
   app.use(cors(corsOptions));
 } else {
@@ -37,12 +38,16 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Laaunched" });
 });
 
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/skill", skillRoutes);
 app.use("/api/project", projectRoutes);
 app.use("/api/education", educationRoutes);
 app.use("/api/experience", experienceRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/technologies", technologyRoutes);
+
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   console.error(err.message, err.stack);
@@ -52,8 +57,9 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || "0.0.0.0";
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(`SAAS running good on port ${PORT}`);
 });
 

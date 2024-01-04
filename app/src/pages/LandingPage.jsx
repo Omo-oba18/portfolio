@@ -1,5 +1,5 @@
 import React from "react";
-import { About, Heading, PostHeading, Skill } from "../core/components";
+import { About, Education, Experience, Heading, PostHeading, Skill } from "../core/components";
 
 const LandingPage = () => {
   return (
@@ -8,6 +8,8 @@ const LandingPage = () => {
       <PostHeading />
       <About />
       <Skill />
+      {/* <Education /> */}
+      <Experience />
     </>
   );
 };

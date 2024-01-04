@@ -9,7 +9,6 @@ import { GuestGuard } from "../guards/GuestGuard";
 import { PATH_DASHBOARD, PATH_PAGE } from "./paths";
 import { LogoLayout } from "../core/layout/logo-layout";
 import { LoadingPage } from "../pages/LoadingPage";
-// import { SkillPage } from "../pages/components";
 
 const Loadable = (Component) => (props) => {
   return (
@@ -28,18 +27,39 @@ const UnknownPage = Loadable(lazy(() => import("../pages/UnknownPage")));
 const LandingPage = Loadable(lazy(() => import("../pages/LandingPage")));
 const DashboardPage = Loadable(lazy(() => import("../pages/DashboardPage")));
 const ProfilePage = Loadable(lazy(() => import("../pages/ProfilePage")));
+// SKILL
 const SkillPage = Loadable(
   lazy(() => import("../pages/components/dashboard/skill/SkillPage"))
 );
-// const EducationPage = Loadable(
-//   lazy(() => import("../pages/components/dashboard/education"))
-// );
+const SkillDetailPage = Loadable(
+  lazy(() => import("../pages/components/dashboard/skill/SkillDetailPage"))
+);
 const NewSkillPage = Loadable(
   lazy(() => import("../pages/components/dashboard/skill/NewSkillPage"))
 );
-// const NewEducationPage = Loadable(
-//   lazy(() => import("../pages/components/dashboard/education/NewEducationPage"))
-// );
+// Education
+const EducationPage = Loadable(
+  lazy(() => import("../pages/components/dashboard/education/EducationPage"))
+);
+const EducationDetailPage = Loadable(
+  lazy(() =>
+    import("../pages/components/dashboard/education/EducationDetailPage")
+  )
+);
+const NewEducationPage = Loadable(
+  lazy(() => import("../pages/components/dashboard/education/NewEducationPage"))
+);
+// Project
+
+const ProjectPage = Loadable(
+  lazy(() => import("../pages/components/dashboard/project/ProjectPage"))
+);
+const ProjectDetailPage = Loadable(
+  lazy(() => import("../pages/components/dashboard/project/ProjectDetailPage"))
+);
+const NewProjectPage = Loadable(
+  lazy(() => import("../pages/components/dashboard/project/NewProjectPage"))
+);
 
 function Router() {
   return useRoutes([
@@ -102,10 +122,27 @@ function Router() {
       children: [
         { path: PATH_DASHBOARD.root, element: <DashboardPage /> },
         { path: PATH_DASHBOARD.profile, element: <ProfilePage /> },
+        //Skill
         { path: PATH_DASHBOARD.skill, element: <SkillPage /> },
-        // { path: PATH_DASHBOARD.education, element: <EducationPage /> },
+        {
+          path: PATH_DASHBOARD.skillDetail(":skillId"), // Dynamic route with parameter
+          element: <SkillDetailPage />,
+        },
         { path: PATH_DASHBOARD.newSkill, element: <NewSkillPage /> },
-        // { path: PATH_DASHBOARD.newEducation, element: <NewEducationPage /> },
+        // Education
+        { path: PATH_DASHBOARD.education, element: <EducationPage /> },
+        {
+          path: PATH_DASHBOARD.educationDetail(":educationId"), // Dynamic route with parameter
+          element: <EducationDetailPage />,
+        },
+        { path: PATH_DASHBOARD.newEducation, element: <NewEducationPage /> },
+        // project
+        { path: PATH_DASHBOARD.project, element: <ProjectPage /> },
+        {
+          path: PATH_DASHBOARD.projectDetail(":projectId"), // Dynamic route with parameter
+          element: <ProjectDetailPage />,
+        },
+        { path: PATH_DASHBOARD.newProject, element: <NewProjectPage /> },
       ],
     },
   ]);

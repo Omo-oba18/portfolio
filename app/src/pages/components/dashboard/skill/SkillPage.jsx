@@ -21,7 +21,6 @@ const SkillPage = () => {
 
   useEffect(() => {
     dispatch(fetchSkills());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   if (isLoading) return <LoadingPage />;
@@ -62,6 +61,7 @@ const SkillPage = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    textDecoration: "none",
     zIndex: 100,
     width: "100%",
     flexGrow: 1,

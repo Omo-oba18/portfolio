@@ -1,42 +1,62 @@
-const skill = require("../services/skill.service");
+const skillService = require("../services/skill.service");
 
 async function createSkill(req, res) {
   try {
-    return await skill.saveSkill(req, res);
+    const skillData = req.body;
+    const savedSkill = await skillService.createSkill(
+      req.userId,
+      req,
+      skillData
+    );
+    res.status(201).json(savedSkill);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error while saving skill", error: error.message });
+    res.status(500).json({ message: error.message });
   }
 }
 
 async function getSkills(req, res) {
   try {
-    return await skill.getAllSkills(req, res);
+    const allSkills = await skillService.getAllSkills();
+    return res.status(200).json({ message: "Skills: ", data: allSkills });
   } catch (error) {
-    res.status(500).json({
-      message: "Error while retrieving skills",
-      error: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 }
+async function getSkill(req, res) {
+  try {
+    const { id } = req.params;
+    const skill = await skillService.getSkillById(id);
+    return res.status(200).json({ message: "Skills: ", data: skill });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 async function updateSkill(req, res) {
   try {
-    return await skill.modifySkill(req, res);
+    const { id } = req.params;
+    const updatedData = req.body;
+    const updatedSkill = await skillService.updateSkill(
+      req.userId,
+      id,
+      updatedData,
+      req
+    );
+    return res
+      .status(201)
+      .json({ message: "Skill updated successfully", data: updatedSkill });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error while updating skill", error: error.message });
+    res.status(500).json({ message: error.message });
   }
 }
 
 async function deleteSkill(req, res) {
   try {
-    return await skill.removeSkill(req, res);
+    const { id } = req.params;
+    const deletedSkill = await skillService.deleteSkill(id);
+    res.json(deletedSkill);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error while deleting skill", error: error.message });
+    res.status(500).json({ message: error.message });
   }
 }
 
@@ -45,4 +65,5 @@ module.exports = {
   updateSkill,
   deleteSkill,
   getSkills,
+  getSkill,
 };

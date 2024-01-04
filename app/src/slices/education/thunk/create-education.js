@@ -1,5 +1,4 @@
 import { createAsyncThunk, nanoid } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
 import { getAuthState } from "../../auth/authSlice";
 import { api } from "../../../http-common";
 import moment from "moment";
@@ -9,7 +8,6 @@ export const createEducation = createAsyncThunk(
   async (newEducation, { rejectWithValue, getState }) => {
     const authState = getAuthState(getState());
     if (!authState.isAuthenticated) {
-      toast.error("You need to be logged in to create a education");
       return rejectWithValue({ errorMessage: "Not logged in" });
     }
 
@@ -24,11 +22,8 @@ export const createEducation = createAsyncThunk(
         createdAt: date,
         updatedAt: date,
       });
-      toast.success("Education created successfully!");
     } catch (error) {
-      toast.error("Failed to create education");
-
-      return rejectWithValue({ errorMessage: "Failed to create education" });
+      return rejectWithValue({ errorMessage: error.response.data.message });
     }
   }
 );

@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       bottom: 0,
       left: 0,
-      transform: "translate(-10%, 0%)",
+      transform: "translate(-10%, -20%)",
       position: "absolute",
       width: "300px", // Adjust the individual photo width as needed
       height: "250px",

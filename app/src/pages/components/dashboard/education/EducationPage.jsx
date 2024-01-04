@@ -10,7 +10,7 @@ import { EmptyEducationPage } from "./EmptyEducationPage";
 import { EducationCard } from "./EducationCard";
 import { Page } from "../../../../core/components";
 import { getEducationState } from "../../../../slices/education/educationSlice";
-import { fetchEducations } from "../../../../slices/education/thunk/fetchEducation";
+import { fetchEducations } from "../../../../slices/education/thunk/fetch-education";
 import { Link } from "react-router-dom";
 import { PATH_DASHBOARD } from "../../../../routes/paths";
 
@@ -21,7 +21,6 @@ const EducationPage = () => {
 
   useEffect(() => {
     dispatch(fetchEducations());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   if (isLoading) return <LoadingPage />;
@@ -62,6 +61,7 @@ const EducationPage = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    textDecoration: "none",
     zIndex: 100,
     width: "100%",
     flexGrow: 1,
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     minHeight: "60vh",
   },
-  btn: { marginBottom: "1rem" },
+  btn: { marginBottom: "2rem !important" },
   wrapper: {
     display: "flex",
     flexWrap: "wrap",

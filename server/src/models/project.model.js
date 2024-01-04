@@ -9,12 +9,10 @@ const projectSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  technologies: {
-    type: String,
-    required: true,
-  },
+  technologies: [{ type: String, required: true }],
   images: [{ type: String }],
   githubLink: { type: String },
+  projectUrl: { type: String },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 });
 

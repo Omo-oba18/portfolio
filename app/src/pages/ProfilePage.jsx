@@ -156,13 +156,13 @@ const ProfilePage = () => {
               )}
             </Stack>
             {user && (
-              <Box className={classes.imageWrapper}>
+              <Box className="imageWrapper">
                 {isLoadingImage ? (
                   <CircularProgress />
                 ) : (
                   <>
                     <img
-                      className={classes.image}
+                      className="image"
                       alt={user.name}
                       src={formik.values.profilePicture || profileImage}
                     />
@@ -170,11 +170,11 @@ const ProfilePage = () => {
                       type="file"
                       accept="image/*"
                       id="profilePicture"
-                      className={classes.hiddenInput}
+                      className="hiddenInput"
                       onChange={handleFileChange}
                     />
                     <label htmlFor="profilePicture">
-                      <CameraAltOutlined className={classes.cameraIcon} />
+                      <CameraAltOutlined className="cameraIcon" />
                     </label>
                   </>
                 )}
@@ -281,27 +281,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     margin: "2em auto",
     textAlign: "center",
-  },
-  imageWrapper: {
-    width: "200px",
-    height: "200px",
-    borderRadius: "50%",
-    position: "relative",
-    overflow: "hidden",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    borderRadius: "50%",
-  },
-  hiddenInput: { display: "none" },
-  cameraIcon: {
-    position: "absolute",
-    top: "1.2rem",
-    right: "2rem",
-    zIndex: 99,
-    cursor: "pointer",
   },
   boxContent: {
     width: "30%",
