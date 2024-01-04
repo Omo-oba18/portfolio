@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { alpha } from "@mui/material/styles";
-import { makeStyles } from "@mui/styles";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { createEducation } from "../../../../slices/education/thunk/create-education";
@@ -17,9 +16,30 @@ import { PATH_DASHBOARD } from "../../../../routes/paths";
 
 import { getAuthState } from "../../../../slices/auth/authSlice";
 import { EducationSchema } from "../../../../utils/validation";
+import { styled } from "@mui/material/styles";
+
+const Content = styled(Page)(({ theme }) => ({
+  maxWidth: 480,
+  margin: "auto",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  padding: theme.spacing(12, 0),
+}));
+
+const Root = styled(Page)(({ theme }) => ({
+  textAlign: "center",
+  paddingBottom: theme.spacing(5),
+  backgroundImage: `linear-gradient(180deg, ${alpha(
+    theme.palette.grey[300],
+    0
+  )} 40%, ${theme.palette.grey[300]} 100%)`,
+  [theme.breakpoints.up("md")]: {
+    textAlign: "left",
+  },
+}));
 
 const NewEducationPage = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { errorMessage } = useSelector(getAuthState);
@@ -67,9 +87,9 @@ const NewEducationPage = () => {
     isSubmitting;
 
   return (
-    <Page className={classes.root} title="New Education | Dashboard">
+    <Root title="New Education | Dashboard">
       <Container>
-        <div className={classes.content}>
+        <Content>
           <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
               {errors.afterSubmit && (
@@ -119,35 +139,10 @@ const NewEducationPage = () => {
               </Stack>
             </Form>
           </FormikProvider>
-        </div>
+        </Content>
       </Container>
-    </Page>
+    </Root>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    textAlign: "center",
-    paddingBottom: theme.spacing(5),
-    backgroundImage: `linear-gradient(180deg, ${alpha(
-      theme.palette.grey[300],
-      0
-    )} 40%, ${theme.palette.grey[300]} 100%)`,
-    [theme.breakpoints.up("md")]: {
-      textAlign: "left",
-    },
-  },
-  content: {
-    maxWidth: 480,
-    margin: "auto",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: theme.spacing(12, 0),
-  },
-  infoBar: {
-    marginBottom: theme.spacing(3),
-  },
-}));
 
 export default NewEducationPage;

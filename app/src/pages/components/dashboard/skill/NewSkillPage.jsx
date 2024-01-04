@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { alpha } from "@mui/material/styles";
-import { makeStyles } from "@mui/styles";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { createSkill } from "../../../../slices/skill/thunk/create-skill";
@@ -18,9 +17,29 @@ import { SkillSchema } from "../../../../utils/validation";
 import { getSkillState, resetState } from "../../../../slices/skill/skillSlice";
 import { useEffect, useState } from "react";
 import { LoadingPage } from "../../../LoadingPage";
+import { styled } from "@mui/material/styles";
+
+const Content = styled(Page)(({ theme }) => ({
+  maxWidth: 480,
+  margin: "auto",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  padding: theme.spacing(12, 0),
+}));
+const Root = styled(Page)(({ theme }) => ({
+  textAlign: "center",
+  paddingBottom: theme.spacing(5),
+  backgroundImage: `linear-gradient(180deg, ${alpha(
+    theme.palette.grey[300],
+    0
+  )} 40%, ${theme.palette.grey[300]} 100%)`,
+  [theme.breakpoints.up("md")]: {
+    textAlign: "left",
+  },
+}));
 
 const NewSkillPage = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { errorMessage, isSuccess, isError, isLoading } =
@@ -85,12 +104,12 @@ const NewSkillPage = () => {
     !dirty ||
     !!Object.keys(errors).length ||
     isSubmitting;
-    
-    if (isLoading) return <LoadingPage />;
+
+  if (isLoading) return <LoadingPage />;
   return (
-    <Page className={classes.root} title="New Skill | Dashboard">
+    <Root title="New Skill | Dashboard">
       <Container>
-        <div className={classes.content}>
+        <Content>
           <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
               {isError && showAlert && (
@@ -147,35 +166,10 @@ const NewSkillPage = () => {
               </Stack>
             </Form>
           </FormikProvider>
-        </div>
+        </Content>
       </Container>
-    </Page>
+    </Root>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    textAlign: "center",
-    paddingBottom: theme.spacing(5),
-    backgroundImage: `linear-gradient(180deg, ${alpha(
-      theme.palette.grey[300],
-      0
-    )} 40%, ${theme.palette.grey[300]} 100%)`,
-    [theme.breakpoints.up("md")]: {
-      textAlign: "left",
-    },
-  },
-  content: {
-    maxWidth: 480,
-    margin: "auto",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: theme.spacing(12, 0),
-  },
-  infoBar: {
-    marginBottom: theme.spacing(3),
-  },
-}));
 
 export default NewSkillPage;

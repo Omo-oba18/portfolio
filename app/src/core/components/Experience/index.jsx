@@ -7,15 +7,23 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getProjectState } from "../../../slices/project/projectSlice";
 import { fetchProjects } from "../../../slices/project/thunk/fetch-project";
 import { LoadingPage } from "../../../pages/LoadingPage";
 import InfoIcon from "@mui/icons-material/InfoOutlined";
+import { styled } from "@mui/material/styles";
+
+const Root = styled(Box)(({ theme }) => ({
+  padding: "6em 2em",
+  backgroundColor: theme.palette.secondary.main,
+}));
+const CustomTypography = styled(Typography)(({ theme }) => ({
+  textAlign: "center",
+  color: theme.palette.primary.main,
+}));
 
 export const Experience = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const { isLoading, projects } = useSelector(getProjectState);
 
@@ -26,11 +34,11 @@ export const Experience = () => {
   if (isLoading) return <LoadingPage />;
 
   return (
-    <Box className={classes.root}>
-      <Typography variant="h2" className={classes.title}>
-        Project Galery
-      </Typography>
-      <p className={classes.subtitle}>
+    <Root>
+      <CustomTypography variant="h2">Project Galery</CustomTypography>
+      <p
+        style={{ fontSize: "16px", marginBottom: "4rem", textAlign: "center" }}
+      >
         Here is some of the Projects I worked on
       </p>
       {projects?.data?.length && (
@@ -56,19 +64,6 @@ export const Experience = () => {
           ))}
         </ImageList>
       )}
-    </Box>
+    </Root>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: "6em 2em",
-    backgroundColor: theme.palette.secondary.main,
-  },
-  title: { textAlign: "center", color: theme.palette.primary.main },
-  subtitle: {
-    fontSize: "16px",
-    marginBottom: "4rem",
-    textAlign: "center",
-  },
-}));

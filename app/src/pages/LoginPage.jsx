@@ -1,74 +1,66 @@
 import React from "react";
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import { Link as RouterLink } from "react-router-dom";
 import { LoginForm, Page } from "../core/components";
 import { PATH_AUTH } from "../routes/paths";
+import { styled } from "@mui/material/styles";
+
+const Root = styled(Page)(({ theme }) => ({
+  [theme.breakpoints.up("md")]: {
+    display: "flex",
+  },
+}));
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+}));
+const ContentStack = styled(Stack)(({ theme }) => ({
+  marginBottom: theme.spacing(5),
+}));
+const RegisterBar = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(3),
+}));
+const Content = styled("div")(({ theme }) => ({
+  maxWidth: 480,
+  margin: "auto",
+  display: "flex",
+  minHeight: "100vh",
+  flexDirection: "column",
+  justifyContent: "center",
+  padding: theme.spacing(12, 0),
+}));
 
 const LoginPage = () => {
-  const classes = useStyles();
   return (
-    <Page className={classes.root} title="Login | Portfolio">
+    <Root title="Login | Portfolio">
       <Container>
-        <div className={classes.content}>
-          <Stack
-            className={classes.contentStack}
-            direction="row"
-            alignItems="center"
-          >
-            <Box className={classes.contentStackBox}>
+        <Content>
+          <ContentStack direction="row" alignItems="center">
+            <Box
+              sx={{
+                flexGrow: 1,
+              }}
+            >
               <Typography variant="h4" gutterBottom>
                 Sign in to your portfolio dashboard
               </Typography>
-              <Typography className={classes.contentStackBoxTypography}>
-                Enter your details below.
-              </Typography>
+              <StyledTypography>Enter your details below.</StyledTypography>
             </Box>
-          </Stack>
+          </ContentStack>
           <LoginForm />
-          <Typography
-            className={classes.registerBar}
-            variant="body2"
-            align="center"
-          >
+          <RegisterBar variant="body2" align="center">
             Don’t have an account?&nbsp;
-            <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
+            <Link
+              variant="subtitle2"
+              component={RouterLink}
+              to={PATH_AUTH.register}
+            >
               Get started
             </Link>
-          </Typography>
-        </div>
+          </RegisterBar>
+        </Content>
       </Container>
-    </Page>
+    </Root>
   );
 };
 
 export default LoginPage;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
-  content: {
-    maxWidth: 480,
-    margin: "auto",
-    display: "flex",
-    minHeight: "100vh",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: theme.spacing(12, 0),
-  },
-  contentStack: {
-    marginBottom: theme.spacing(5),
-  },
-  contentStackBox: {
-    flexGrow: 1,
-  },
-  contentStackBoxTypography: {
-    color: theme.palette.text.secondary,
-  },
-  registerBar: {
-    marginTop: theme.spacing(3),
-  },
-}));

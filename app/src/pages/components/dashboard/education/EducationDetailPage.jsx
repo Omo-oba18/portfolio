@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Page } from "../../../../core/components";
-import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
-import defaultImage from "../../../../assets/javafx.jpg";
+
 import {
   Container,
-  Box,
   Typography,
-  CircularProgress,
   TextField,
   Stack,
   Alert,
@@ -19,16 +16,15 @@ import { editEducation } from "../../../../slices/education/thunk/edit-education
 import { useParams, useNavigate } from "react-router-dom";
 import { LoadingPage } from "../../../LoadingPage";
 import { getEducationState } from "../../../../slices/education/educationSlice";
-import {
-  ArrowBackIosOutlined,
-  CameraAltOutlined,
-  Close,
-  Edit,
-} from "@mui/icons-material";
+import { ArrowBackIosOutlined, Close, Edit } from "@mui/icons-material";
 import { getEducationById } from "../../../../slices/education/thunk/getEducationById";
+import { styled } from "@mui/material/styles";
+
+const Root = styled(Page)(({ theme }) => ({
+  padding: "2em",
+}));
 
 const EducationDetailPage = () => {
-  const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { errorMessage } = useSelector(getAuthState);
@@ -38,7 +34,7 @@ const EducationDetailPage = () => {
 
   useEffect(() => {
     dispatch(getEducationById(educationId));
-  }, [dispatch]);
+  }, [dispatch, educationId]);
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
@@ -92,10 +88,11 @@ const EducationDetailPage = () => {
     !dirty ||
     !!Object.keys(errors).length ||
     isSubmitting;
+
   const alertSeverity = formik.errors.afterSubmit ? "error" : "success";
 
   return (
-    <Page className={classes.root} title="Education Detail | Portfolio">
+    <Root title="Education Detail | Portfolio">
       <Container maxWidth="lg">
         {formik.errors.afterSubmit && (
           <Alert severity={alertSeverity}>{formik.errors.afterSubmit}</Alert>
@@ -230,7 +227,12 @@ const EducationDetailPage = () => {
                   helperText={touched.graduationYear && errors.graduationYear}
                   sx={{ marginTop: "0.6em", marginBottom: "0.6em" }}
                 />
-                <Button size="large" type="submit" variant="contained">
+                <Button
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  disabled={isSubmitDisabled}
+                >
                   Update Education
                 </Button>
               </Stack>
@@ -256,11 +258,8 @@ const EducationDetailPage = () => {
           </Form>
         </FormikProvider>
       </Container>
-    </Page>
+    </Root>
   );
 };
-const useStyles = makeStyles((theme) => ({
-  root: { padding: "2em" },
-}));
 
 export default EducationDetailPage;

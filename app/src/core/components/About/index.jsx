@@ -1,14 +1,21 @@
 import React, { useEffect } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { styled } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { getUserState } from "../../../slices/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../../slices/user/thunk/get-user";
 import { LoadingPage } from "../../../pages/LoadingPage";
 
+const CustomTypography = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.main,
+}));
+const CustomBox = styled(Box)(({ theme }) => ({
+  padding: "2em",
+  backgroundColor: theme.palette.secondary.main,
+}));
+
 export const About = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const userName = "Chablis";
   const { user, isLoading } = useSelector(getUserState);
@@ -19,21 +26,21 @@ export const About = () => {
 
   if (isLoading) return <LoadingPage />;
   return (
-    <Box className={classes.container}>
+    <CustomBox>
       <Stack
         direction={{ sm: "column", md: "row" }}
         space={2}
-        className={classes.wrapper}
+        style={{ justifyContent: "space-evenly", alignItems: "center" }}
       >
         <motion.div
           initial={{ opacity: 0, x: -100 }} // Initial state
           animate={{ opacity: 1, x: 0 }} // Animation state
           transition={{ duration: 1 }}
-          className={classes.textWrapper}
+          style={{ maxWidth: "400px" }}
         >
-          <Typography variant="h2" className={classes.title}>
+          <CustomTypography variant="h2">
             About Chablis Mahutin
-          </Typography>
+          </CustomTypography>
           {user && (
             <Typography sx={{ textAlign: "justify" }}>
               {user.aboutMe}
@@ -44,30 +51,27 @@ export const About = () => {
           initial={{ opacity: 0, x: 100 }} // Initial state
           animate={{ opacity: 1, x: 0 }} // Animation state
           transition={{ duration: 1 }}
-          className={classes.roundedBox}
+          style={{
+            borderTopLeftRadius: "40%",
+            borderTopRightRadius: "40%",
+            width: "300px",
+            height: "370px",
+            overflow: "hidden",
+          }}
         >
-          {user && <img src={user.profilePicture} className={classes.image} />}
+          {user && (
+            <img
+              src={user.profilePicture}
+              style={{
+                objectFit: "cover",
+                width: "100%", // Make sure the image takes 100% width of the container
+                height: "100%",
+              }}
+              alt={user.name}
+            />
+          )}
         </motion.div>
       </Stack>
-    </Box>
+    </CustomBox>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  container: { padding: "2em", backgroundColor: theme.palette.secondary.main },
-  wrapper: { justifyContent: "space-evenly", alignItems: "center" },
-  title: { color: theme.palette.primary.main },
-  textWrapper: { maxWidth: "400px" },
-  roundedBox: {
-    borderTopLeftRadius: "40%",
-    borderTopRightRadius: "40%",
-    width: "300px",
-    height: "370px",
-    overflow: "hidden",
-  },
-  image: {
-    objectFit: "cover",
-    width: "100%", // Make sure the image takes 100% width of the container
-    height: "100%",
-  },
-}));

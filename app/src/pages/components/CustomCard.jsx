@@ -6,12 +6,10 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 
 export const CustomCard = ({ title }) => {
-  const classes = useStyles();
   return (
-    <Card sx={{ maxWidth: 345 }} className={classes.card}>
+    <Card sx={{ maxWidth: 345, marginLeft: "2em", marginRight: "2em" }}>
       <CardMedia
         sx={{ height: 100 }}
         image="/static/images/cards/contemplative-reptile.jpg"
@@ -33,10 +31,3 @@ export const CustomCard = ({ title }) => {
     </Card>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  card: {
-    marginLeft: "2em",
-    marginRight: "2em",
-  },
-}));

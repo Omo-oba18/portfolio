@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Page } from "../../../../core/components";
-import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import defaultImage from "../../../../assets/javafx.jpg";
 import {
@@ -29,7 +28,6 @@ import { PATH_DASHBOARD } from "../../../../routes/paths";
 import { SkillSchema } from "../../../../utils/validation";
 
 const SkillDetailPage = () => {
-  const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { skillId } = useParams(); // Get skillId from URL parameters using React Router's useParams
@@ -75,14 +73,12 @@ const SkillDetailPage = () => {
     }
   };
 
-  
-
   const formik = useFormik({
     initialValues: {
-      name: skill ? skill.name  : "", // Check if skill exists and has a name
-      proficiency: skill ? skill.proficiency  : "", // Check proficiency similarly
-      description: skill ? skill.description  : "", // Check description similarly
-      image: skill ? skill.image  : null, // Initialize image as null since it will be updated separately
+      name: skill ? skill.name : "", // Check if skill exists and has a name
+      proficiency: skill ? skill.proficiency : "", // Check proficiency similarly
+      description: skill ? skill.description : "", // Check description similarly
+      image: skill ? skill.image : null, // Initialize image as null since it will be updated separately
     },
     validationSchema: SkillSchema,
     onSubmit: (values, { resetForm, setErrors, setSubmitting }) => {
@@ -124,7 +120,7 @@ const SkillDetailPage = () => {
       reader.readAsDataURL(file);
     }
   };
-  
+
   const {
     values,
     errors,
@@ -146,7 +142,7 @@ const SkillDetailPage = () => {
     isSubmitting;
 
   return (
-    <Page className={classes.root} title="Skill Detail | Portfolio">
+    <Page style={{ padding: "2em" }} title="Skill Detail | Portfolio">
       <Container maxWidth="lg">
         {isError && showAlert && (
           <Alert severity="error" onClose={() => setShowAlert(false)}>
@@ -346,8 +342,5 @@ const SkillDetailPage = () => {
     </Page>
   );
 };
-const useStyles = makeStyles((theme) => ({
-  root: { padding: "2em" },
-}));
 
 export default SkillDetailPage;

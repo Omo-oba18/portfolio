@@ -1,21 +1,37 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import notFoundImg from "../assets/404_not_found.png";
 import { Page } from "../core/components";
+import { styled } from "@mui/material/styles";
+
+const Root = styled(Page)(({ theme }) => ({
+  display: "flex",
+  minHeight: "100%",
+  alignItems: "center",
+  paddingTop: theme.spacing(15),
+  paddingBottom: theme.spacing(10),
+}));
+const Text = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.primary,
+}));
+const Image = styled(Box)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(4),
+}));
 
 export default function UnknownPage() {
-  const classes = useStyles();
-
   return (
-    <Page
-      className={classes.root}
-      title="404 Page Not Found | Chablis Mahutin Portfolio"
-    >
+    <Root title="404 Page Not Found | Chablis Mahutin Portfolio">
       <Container>
         <Box component={motion.div} initial="false" animate>
-          <Box className={classes.box}>
+          <Box
+            sx={{
+              maxWidth: 400,
+              margin: "auto",
+              textAlign: "center",
+            }}
+          >
             <motion.div
               animate={{
                 scale: [0.3, 1.1, 0.9, 1.03, 0.97, 1],
@@ -27,10 +43,10 @@ export default function UnknownPage() {
                 Sorry, the page is not found
               </Typography>
             </motion.div>
-            <Typography className={classes.text}>
+            <Text>
               Sorry, we could not find the pages you are looking for. Perhaps
               you have mistyped the URL? Be sure to check you spelling.
-            </Typography>
+            </Text>
             <motion.div
               animate={{
                 scale: [0.3, 1.1, 0.9, 1.03, 0.97, 1],
@@ -38,14 +54,12 @@ export default function UnknownPage() {
                 transition: { duration: 0.72, ease: [0.43, 0.13, 0.23, 0.96] },
               }}
             >
-              <Box
-                className={classes.image}
-                component="img"
-                src={notFoundImg}
-              />
+              <Image component="img" src={notFoundImg} />
             </motion.div>
             <Button
-              className={classes.btn}
+              sx={{
+                color: "#fff",
+              }}
               component={Link}
               to="/"
               size="large"
@@ -56,31 +70,6 @@ export default function UnknownPage() {
           </Box>
         </Box>
       </Container>
-    </Page>
+    </Root>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    minHeight: "100%",
-    alignItems: "center",
-    paddingTop: theme.spacing(15),
-    paddingBottom: theme.spacing(10),
-  },
-  box: {
-    maxWidth: 400,
-    margin: "auto",
-    textAlign: "center",
-  },
-  text: {
-    color: theme.palette.text.primary,
-  },
-  image: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(4),
-  },
-  btn: {
-    color: "#fff",
-  },
-}));

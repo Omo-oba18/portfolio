@@ -3,13 +3,21 @@ import { Box, Button, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import { PATH_DASHBOARD } from "../../../../routes/paths";
 import alertIcon from "../../../../assets/icons/alert.svg";
-import { makeStyles } from "@mui/styles";
+import { styled } from "@mui/material/styles";
+
+const Root = styled(Box)(({ theme }) => ({
+  maxWidth: 850,
+  margin: "auto",
+  textAlign: "center",
+  padding: theme.spacing(10),
+  border: "2px dashed #bdbdbd",
+  borderColor: theme.palette.grey[400],
+}));
 
 export function EmptyEducationPage() {
-  const classes = useStyles();
   return (
     <Box initial="false" animate="true">
-      <Box className={classes.root}>
+      <Root>
         <motion.div
           animate={{
             scale: [0.3, 1.1, 0.9, 1.03, 0.97, 1],
@@ -59,18 +67,7 @@ export function EmptyEducationPage() {
         >
           Create new Education
         </Button>
-      </Box>
+      </Root>
     </Box>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 850,
-    margin: "auto",
-    textAlign: "center",
-    padding: theme.spacing(10),
-    border: "2px dashed #bdbdbd",
-    borderColor: theme.palette.grey[400], // Assuming you have a grey palette in your theme
-  },
-}));

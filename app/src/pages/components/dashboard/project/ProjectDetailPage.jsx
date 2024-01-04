@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Page } from "../../../../core/components";
-import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
-import defaultImage from "../../../../assets/javafx.jpg";
 import {
   Container,
   Box,
   Typography,
-  CircularProgress,
   TextField,
   Stack,
   Alert,
@@ -23,7 +20,6 @@ import { ArrowBackIosOutlined, Close, Edit } from "@mui/icons-material";
 import { getProjectById } from "../../../../slices/project/thunk/getProjectById";
 
 const ProjectDetailPage = () => {
-  const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { errorMessage } = useSelector(getAuthState);
@@ -95,7 +91,7 @@ const ProjectDetailPage = () => {
   const alertSeverity = formik.errors.afterSubmit ? "error" : "success";
 
   return (
-    <Page className={classes.root} title="Project Detail | Portfolio">
+    <Page style={{ padding: "2em" }} title="Project Detail | Portfolio">
       <Container maxWidth="lg">
         {formik.errors.afterSubmit && (
           <Alert severity={alertSeverity}>{formik.errors.afterSubmit}</Alert>
@@ -260,8 +256,4 @@ const ProjectDetailPage = () => {
     </Page>
   );
 };
-const useStyles = makeStyles((theme) => ({
-  root: { padding: "2em" },
-}));
-
 export default ProjectDetailPage;

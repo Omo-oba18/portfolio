@@ -8,3 +8,4 @@ export { Education } from "./Education";
 export { About } from "./About";
 export { Pagination } from "./Pagination/index";
 export { Experience } from "./Experience";
+export { Testimony } from "./Testimony";

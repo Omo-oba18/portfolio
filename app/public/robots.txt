@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /private/    # disallow crawling of the /private/ directory
+Disallow: /tmp/        # disallow crawling of the /tmp/ directory
+Disallow: /cgi-bin/    # disallow crawling of the /cgi-bin/ directory
+
+User-agent: Googlebot
+Disallow: /no-google/  # disallow Googlebot from crawling /no-google/ directory
+
+User-agent: Bingbot
+Disallow: /no-bing/    # disallow Bingbot from crawling /no-bing/ directory
+
+Sitemap: https://www.portfolio-chablis.vercel.app/sitemap.xml   # specify the location of your sitemap

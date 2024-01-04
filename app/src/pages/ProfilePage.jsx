@@ -11,7 +11,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../core/components";
 import profileImage from "../assets/profile-image.jpg";
-import { makeStyles } from "@mui/styles";
 import { alpha } from "@mui/material/styles";
 import { CameraAltOutlined, ModeEditOutline } from "@mui/icons-material";
 import { getUserState } from "../slices/user/userSlice";
@@ -19,6 +18,20 @@ import { LoadingPage } from "./LoadingPage";
 import { getUserInfo } from "../slices/user/thunk/get-user";
 import { Form, FormikProvider, useFormik } from "formik";
 import { updateUserInfo } from "../slices/user/thunk/edit-user";
+
+import { styled } from "@mui/material/styles";
+
+const Root = styled(Page)(({ theme }) => ({
+  zIndex: 100,
+  width: "100%",
+  flexGrow: 1,
+  position: "relative",
+  padding: "0 4vw",
+  backgroundImage: `linear-gradient(180deg, ${alpha(
+    theme.palette.grey[300],
+    0
+  )} 40%, ${theme.palette.grey[300]} 100%)`,
+}));
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -32,7 +45,6 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editAboutMe, setEditAboutMe] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
-  const classes = useStyles();
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
@@ -108,11 +120,26 @@ const ProfilePage = () => {
   const alertSeverity = formik.errors.afterSubmit ? "error" : "success";
 
   return (
-    <Page className={classes.root} title="Profile | Portfolio">
-      <Typography variant="h2" className={classes.title}>
+    <Root title="Profile | Portfolio">
+      <Typography
+        variant="h2"
+        sx={{
+          margin: "2em auto",
+          textAlign: "center",
+          fontSize: "46px",
+          fontWeight: "bold",
+        }}
+      >
         Profile
       </Typography>
-      <Typography className={classes.bio}>
+      <Typography
+        sx={{
+          textTransform: "uppercase",
+          fontSize: "16px",
+          margin: "2em auto",
+          textAlign: "center",
+        }}
+      >
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat, non
         placeat. Provident.
       </Typography>
@@ -124,9 +151,25 @@ const ProfilePage = () => {
           <Stack
             direction={{ xs: "column", md: "row" }}
             spacing={4}
-            className={classes.wrapper}
+            sx={{
+              padding: "2em",
+              margin: "0 auto",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+            }}
           >
-            <Stack direction="column" className={classes.boxContent}>
+            <Stack
+              direction="column"
+              sx={{
+                width: "30%",
+                margin: "10px",
+                position: "relative",
+                display: "flex",
+                alignItems: "start",
+              }}
+            >
               <Typography>About me</Typography>
               {editAboutMe ? (
                 <TextField
@@ -142,7 +185,12 @@ const ProfilePage = () => {
                 user && <Typography>{user.aboutMe}</Typography>
               )}
               <ModeEditOutline
-                className={classes.editIcon}
+                sx={{
+                  position: "absolute",
+                  right: 10,
+                  top: 0,
+                  cursor: "pointer",
+                }}
                 onClick={handleEditAbout}
               />
               {editAboutMe && (
@@ -181,10 +229,26 @@ const ProfilePage = () => {
               </Box>
             )}
             {/* {user && <Box component="img" src={profileImage} alt={user.name} />} */}
-            <Stack direction="column" className={classes.boxContent}>
+            <Stack
+              direction="column"
+              sx={{
+                width: "30%",
+                margin: "10px",
+                position: "relative",
+                display: "flex",
+                alignItems: "start",
+              }}
+            >
               <Typography>Detail</Typography>
               <Typography>Name:</Typography>
-              <Stack direction="row" className={classes.editWrapper}>
+              <Stack
+                direction="row"
+                sx={{
+                  display: "flex",
+                  justifyContent: "start",
+                  alignItems: "center",
+                }}
+              >
                 {isEditing ? (
                   <TextField
                     autoFocus
@@ -199,7 +263,14 @@ const ProfilePage = () => {
                 )}
               </Stack>
               <Typography>Phone:</Typography>
-              <Stack direction="row" className={classes.editWrapper}>
+              <Stack
+                direction="row"
+                sx={{
+                  display: "flex",
+                  justifyContent: "start",
+                  alignItems: "center",
+                }}
+              >
                 {isEditing ? (
                   <TextField
                     autoFocus
@@ -214,7 +285,14 @@ const ProfilePage = () => {
                 )}
               </Stack>
               <Typography>Bio:</Typography>
-              <Stack direction="row" className={classes.editWrapper}>
+              <Stack
+                direction="row"
+                sx={{
+                  display: "flex",
+                  justifyContent: "start",
+                  alignItems: "center",
+                }}
+              >
                 {isEditing ? (
                   <TextField
                     autoFocus
@@ -231,7 +309,12 @@ const ProfilePage = () => {
                 )}
               </Stack>
               <ModeEditOutline
-                className={classes.editIcon}
+                sx={{
+                  position: "absolute",
+                  right: 10,
+                  top: 0,
+                  cursor: "pointer",
+                }}
                 onClick={handleEdit}
               />
               {isEditing && (
@@ -247,59 +330,8 @@ const ProfilePage = () => {
           </Stack>
         </Form>
       </FormikProvider>
-    </Page>
+    </Root>
   );
 };
-const useStyles = makeStyles((theme) => ({
-  root: {
-    zIndex: 100,
-    width: "100%",
-    flexGrow: 1,
-    position: "relative",
-    padding: "0 4vw",
-    backgroundImage: `linear-gradient(180deg, ${alpha(
-      theme.palette.grey[300],
-      0
-    )} 40%, ${theme.palette.grey[300]} 100%)`,
-  },
-  title: {
-    margin: "2em auto",
-    textAlign: "center",
-    fontSize: "46px",
-    fontWeight: "bold",
-  },
-  wrapper: {
-    padding: "2em",
-    margin: "0 auto",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-  },
-  bio: {
-    textTransform: "uppercase",
-    fontSize: "16px",
-    margin: "2em auto",
-    textAlign: "center",
-  },
-  boxContent: {
-    width: "30%",
-    margin: "10px",
-    position: "relative",
-    display: "flex",
-    alignItems: "start",
-  },
-  editWrapper: {
-    display: "flex",
-    justifyContent: "start",
-    alignItems: "center",
-  },
-  editIcon: {
-    position: "absolute",
-    right: 10,
-    top: 0,
-    cursor: "pointer",
-  },
-}));
 
 export default ProfilePage;

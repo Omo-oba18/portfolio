@@ -1,14 +1,19 @@
 import { Box } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { makeStyles } from "@mui/styles";
 import { motion } from "framer-motion";
 import { Logo } from "../core/components";
+import { styled } from "@mui/material/styles";
+
+const Root = styled("div")(({ theme }) => ({
+  height: "100vh",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: theme.palette.secondary.main,
+}));
 
 export function LoadingPage({ ...other }) {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root} {...other}>
+    <Root {...other}>
       <motion.div
         initial={{ rotateY: 0 }}
         animate={{ rotateY: 360 }}
@@ -23,7 +28,12 @@ export function LoadingPage({ ...other }) {
       </motion.div>
 
       <Box
-        className={classes.animatedInnerBox}
+        sx={{
+          width: 100,
+          height: 100,
+          borderRadius: "25%",
+          position: "absolute",
+        }}
         component={motion.div}
         animate={{
           scale: [1.2, 1, 1, 1.2, 1.2],
@@ -35,7 +45,12 @@ export function LoadingPage({ ...other }) {
       />
 
       <Box
-        className={classes.animatedOuterBox}
+        sx={{
+          width: 120,
+          height: 120,
+          borderRadius: "25%",
+          position: "absolute",
+        }}
         component={motion.div}
         animate={{
           scale: [1, 1.2, 1.2, 1, 1],
@@ -49,30 +64,6 @@ export function LoadingPage({ ...other }) {
           repeat: Infinity,
         }}
       />
-    </div>
+    </Root>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: theme.palette.secondary.main,
-  },
-  animatedInnerBox: {
-    width: 100,
-    height: 100,
-    borderRadius: "25%",
-    position: "absolute",
-    // border: `solid 3px ${alpha(theme.palette.primary.dark, 0.25)}`,
-  },
-  animatedOuterBox: {
-    width: 120,
-    height: 120,
-    borderRadius: "25%",
-    position: "absolute",
-    // border: `solid 8px ${alpha(theme.palette.primary.dark, 0.25)}`,
-  },
-}));
