@@ -50,6 +50,7 @@ export const Experience = () => {
                 src={`${process.env.REACT_APP_API_URL}${item.images[1]}`}
                 alt={item.title}
                 loading="lazy"
+                style={{ width: "100%", height: "300px", objectFit: "cover" }}
               />
               <ImageListItemBar
                 title={item.title}
