@@ -46,8 +46,8 @@ export const Experience = () => {
           {projects.data.map((item) => (
             <ImageListItem key={item._id}>
               <img
-                srcSet={`${process.env.REACT_APP_API_URL}${item.images[0]}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                src={`${process.env.REACT_APP_API_URL}${item.images[0]}?w=248&fit=crop&auto=format`}
+                srcSet={`${process.env.REACT_APP_API_URL}${item.images[1]}`}
+                src={`${process.env.REACT_APP_API_URL}${item.images[1]}`}
                 alt={item.title}
                 loading="lazy"
               />
